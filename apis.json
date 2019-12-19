@@ -1,0 +1,56 @@
+{
+    "name": "Kinetica",
+    "description": "Kinetica GPU Database for Advanced Analytics - Proven in the Enterprise. 100x faster than CPU-bound systems. Scale-out with Security and HA.",
+    "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/28240-www-kinetica-com.jpg",
+    "tags": [
+        "api provider",
+        "have api"
+    ],
+    "created": "2019-12-19",
+    "modified": "2019-12-19",
+    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/kinetica\/master\/apis.json",
+    "specificationVersion": "0.14",
+    "apis": [
+        {
+            "name": "Kinetica",
+            "description": null,
+            "image": "http:\/\/kinlane-productions.s3.amazonaws.com\/screen-capture-api\/28240-www-kinetica-com.jpg",
+            "humanURL": "https:\/\/www.kinetica.com",
+            "baseURL": "",
+            "tags": [],
+            "properties": [
+                {
+                    "type": "x-openapi",
+                    "url": "https:\/\/raw.githubusercontent.com\/api-evangelist\/1forge\/master\/kinetica-openapi.json"
+                }
+            ]
+        }
+    ],
+    "include": [],
+    "x-common": [
+        {
+            "type": "Crunchbase",
+            "url": "https:\/\/crunchbase.com\/organization\/kinetica-2"
+        },
+        {
+            "type": "Developers",
+            "url": "https:\/\/www.kinetica.com\/docs\/"
+        },
+        {
+            "type": "Email",
+            "url": "legal@kinetica.com"
+        },
+        {
+            "type": "Email",
+            "url": "contact@kinetica.com"
+        },
+        {
+            "type": "Twitter",
+            "url": "https:\/\/twitter.com\/KineticaHQ"
+        },
+        {
+            "type": "Website",
+            "url": "https:\/\/www.kinetica.com"
+        }
+    ]
+}
