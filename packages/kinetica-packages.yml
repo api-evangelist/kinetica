@@ -1,0 +1,128 @@
+generated: '2026-08-04'
+method: searched
+source: PyPI, npm, NuGet, pkg.go.dev/proxy.golang.org, RubyGems and the kineticadb
+  GitHub organization
+packages:
+- language: python
+  registry: pypi
+  name: gpudb
+  version: 7.2.3.10
+  url: https://pypi.org/project/gpudb/
+  install: pip install gpudb
+  repository: https://github.com/kineticadb/kinetica-api-python
+  docs: https://docs.kinetica.com/7.2/api/python/
+  official: true
+  note: the primary Kinetica Python client. Requires Python 3.8–3.13.
+- language: python
+  registry: pypi
+  name: mcp-kinetica
+  version: 7.2.3.2
+  url: https://pypi.org/project/mcp-kinetica/
+  install: pip install mcp-kinetica
+  repository: https://github.com/kineticadb/mcp-kinetica
+  official: true
+  note: first-party MCP server for a Kinetica database (stdio).
+- language: python
+  registry: pypi
+  name: sqlalchemy-kinetica
+  version: 7.2.3.1
+  url: https://pypi.org/project/sqlalchemy-kinetica/
+  install: pip install sqlalchemy-kinetica
+  repository: https://github.com/kineticadb/sqlalchemy-kinetica
+  official: true
+  note: SQLAlchemy dialect.
+- language: python
+  registry: pypi
+  name: langchain-kinetica
+  version: 1.3.0
+  url: https://pypi.org/project/langchain-kinetica/
+  install: pip install langchain-kinetica
+  repository: https://github.com/kineticadb/langchain-kinetica
+  official: true
+  note: LangChain integration package.
+- language: javascript
+  registry: npm
+  name: '@kinetica/gpudb'
+  version: 7.2.3-2
+  url: https://www.npmjs.com/package/@kinetica/gpudb
+  install: npm install @kinetica/gpudb
+  repository: https://github.com/kineticadb/kinetica-api-javascript
+  official: true
+  note: Kinetica Node.js / browser JavaScript client.
+- language: javascript
+  registry: npm
+  name: '@toolbeltai/cli'
+  version: 0.1.7
+  url: https://www.npmjs.com/package/@toolbeltai/cli
+  install: npx @toolbeltai/cli
+  homepage: https://toolbelt.ai
+  official: true
+  note: Toolbelt CLI — installs the Toolbelt MCP server into an agent in one command
+    (auto-detects the AI client, writes the MCP config, mints credentials).
+- language: csharp
+  registry: nuget
+  name: Kinetica
+  version: 7.2.3.5
+  url: https://www.nuget.org/packages/Kinetica/
+  install: dotnet add package Kinetica
+  repository: https://github.com/kineticadb/kinetica-api-cs
+  official: true
+  note: 'registry description: "Official C# API for Kinetica".'
+- language: go
+  registry: go-modules
+  name: github.com/kineticadb/kinetica-api-go
+  url: https://pkg.go.dev/github.com/kineticadb/kinetica-api-go
+  install: go get github.com/kineticadb/kinetica-api-go
+  repository: https://github.com/kineticadb/kinetica-api-go
+  official: true
+  note: 'repository description: "Official Go API for Kinetica".'
+- language: java
+  registry: source
+  name: kinetica-api-java
+  url: https://github.com/kineticadb/kinetica-api-java
+  repository: https://github.com/kineticadb/kinetica-api-java
+  docs: https://docs.kinetica.com/7.2/api/java/
+  official: true
+  note: Client-side Java API. No Maven Central coordinate was found under com.kinetica
+    or artifact gpudb-api — distributed from the repository / Kinetica downloads.
+- language: cpp
+  registry: source
+  name: kinetica-api-cpp
+  url: https://github.com/kineticadb/kinetica-api-cpp
+  repository: https://github.com/kineticadb/kinetica-api-cpp
+  docs: https://docs.kinetica.com/7.2/api/cpp/
+  official: true
+  note: Client-side C++ API, distributed from source.
+- language: ruby
+  registry: rubygems
+  name: logstash-output-kinetica
+  url: https://rubygems.org/gems/logstash-output-kinetica
+  install: gem install logstash-output-kinetica
+  repository: https://github.com/kineticadb/logstash-output-kinetica
+  official: true
+  note: Logstash output plugin. Legacy — repository last updated 2021.
+drivers:
+- name: Kinetica JDBC driver
+  url: https://github.com/kineticadb/kinetica-client-jdbc
+  official: true
+- name: Kinetica Windows ODBC driver
+  url: https://github.com/kineticadb/kinetica-client-win-odbc
+  official: true
+excluded:
+- name: kinetica (npm)
+  url: https://www.npmjs.com/package/kinetica
+  reason: unrelated third-party package ("Unprecedented kinetic engine" by broadsw0rd)
+    — NOT Kinetica the database company.
+registries_probed:
+- npm
+- pypi
+- maven-central
+- nuget
+- go-modules
+- rubygems
+- crates.io
+- packagist
+x-evidence:
+  fetched: '2026-08-04'
+  maven_central: 'searched g:com.kinetica and a:gpudb-api — numFound 0'
+  crates_io: no first-party crate found

@@ -1,0 +1,57 @@
+generated: '2026-08-04'
+method: probed
+source: https://docs.kinetica.com/.well-known/agent-card.json
+discovery:
+  path: /.well-known/agent-card.json
+  canonical: true
+  host: docs.kinetica.com
+conformance:
+  spec: A2A 1.0.0
+  grade: near-conformant
+  protocol_version: '0.3'
+  preferred_transport: HTTP+JSON
+  deviations:
+  - nonstandard-supportedInterfaces
+  notes: capabilities is an object, protocolVersion is present and skills is an array,
+    so no hard check fails. The card declares interfaces under `supportedInterfaces`
+    rather than the A2A 1.0.0 `additionalInterfaces` key, and carries no `description`
+    field on the card root.
+card:
+  name: Kinetica Docs
+  url: https://docs.kinetica.com/
+  version: 1.0.0
+  provider: Kinetica Docs
+  documentation_url: https://docs.kinetica.com/
+  capabilities:
+    streaming: false
+    push_notifications: false
+  default_input_modes:
+  - text/plain
+  default_output_modes:
+  - text/plain
+  skills: 1
+  skill_ids:
+  - kinetica
+  file: kinetica-agent-card.json
+related:
+  agent_skill: https://docs.kinetica.com/.well-known/agent-skills/kinetica/skill.md
+  agent_skills_index: https://docs.kinetica.com/.well-known/agent-skills/index.json
+  mcp_manifest: https://docs.kinetica.com/.well-known/mcp.json
+probes_that_missed:
+- url: https://www.kinetica.com/.well-known/agent-card.json
+  http_status: 404
+- url: https://www.kinetica.com/.well-known/agent.json
+  http_status: 404
+- url: https://docs.kinetica.com/.well-known/agent.json
+  http_status: 404
+- url: https://mcp.toolbelt.ai/.well-known/agent-card.json
+  http_status: 404
+- url: https://www.toolbelt.ai/.well-known/agent-card.json
+  http_status: 200
+  rejected: HTML single-page-app catch-all, not a JSON AgentCard
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://docs.kinetica.com/.well-known/agent-card.json
+  http_status: 200
+  content_type: application/json
+  bytes: 1008

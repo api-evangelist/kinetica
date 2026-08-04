@@ -1,0 +1,121 @@
+generated: '2026-08-04'
+method: searched
+source: https://github.com/kineticadb/agent-skills/blob/main/knowledge/error-handling.md
+docs: https://docs.kinetica.com/7.2/api/
+format: string-message
+note: Kinetica does not publish RFC 9457 problem+json types or a numeric error-code
+  registry. Errors surface as a status/message pair on the JSON response envelope
+  and as exceptions in the client libraries (GPUdbException, GPUdbExitException, GPUdbSubmitException,
+  GPUdbInsertionException, GPUdbHAUnavailableException). The catalogue below is the
+  provider's own published error lookup table, captured verbatim in meaning; nothing
+  was invented.
+envelope:
+  transport: HTTP 200 with a status field on the JSON body for most application errors;
+    HTTP-level failures for auth and connectivity
+  client_exceptions:
+  - GPUdbException
+  - GPUdbExitException
+  - GPUdbSubmitException
+  - GPUdbInsertionException
+  - GPUdbHAUnavailableException
+  source: https://docs.kinetica.com/content/api/cpp/classgpudb_1_1GPUdbException.md
+errors:
+- error: Connection refused
+  cause: Server not running or wrong URL
+  action: Verify the URL and server status
+  class: connectivity
+- error: Authentication failed
+  cause: Wrong credentials
+  action: Re-run the connection setup and update credentials
+  class: authentication
+- error: Table does not exist
+  cause: Wrong table name or schema
+  action: Run show-tables (or /show/table with table_name "*") to list available tables
+  class: not-found
+- error: Expression parse error
+  cause: Invalid filter syntax
+  action: 'Use SQL-like expressions: col > value, col = ''string'''
+  class: validation
+- error: Aggregate expressions cannot be nested
+  cause: Nested aggregate/window functions (SUM(COUNT(*)), AVG(LAG(...)))
+  action: Split the query into CTEs so window functions and aggregates are separated
+  class: validation
+- error: No enum constant ... SqlTypeName.DATETIME
+  cause: Used DATETIME '...' as a literal prefix, which does not exist
+  action: Use TIMESTAMP '...' for instant literals whatever the target column type
+  class: validation
+- error: Graph not found
+  cause: Wrong graph name
+  action: Run graph show (or /show/graph) to list available graphs
+  class: not-found
+- error: Invalid solver type
+  cause: Unsupported graph solver requested
+  action: Use SHORTEST_PATH, PAGE_RANK, TSP, CENTRALITY, etc.
+  class: validation
+- error: Graph already exists
+  cause: Duplicate graph name without OR REPLACE
+  action: Add OR REPLACE to CREATE GRAPH, or drop the graph first
+  class: conflict
+- error: Data type mismatch
+  cause: NODE columns differ across node/edge tables on CREATE GRAPH
+  action: Ensure all NODE/NODE1/NODE2 columns share the same data type
+  class: validation
+- error: Missing INPUT_TABLES parse error
+  cause: Bare SELECT in a NODES/EDGES clause
+  action: Wrap each SELECT in INPUT_TABLES((...))
+  class: validation
+- error: Invalid label format
+  cause: Plain string supplied for a multi-label column
+  action: Use VARCHAR[] with string_to_array() or ARRAY[...]
+  class: validation
+- error: No edges found / empty Cypher result
+  cause: Wrong arrow direction or label
+  action: Check the directed flag via graph show; flip the arrow or add force_undirected
+  class: empty-result
+- error: Column not found
+  cause: Wrong column referenced in a geo filter
+  action: Run describe-table to check column names
+  class: not-found
+- error: Invalid WKT
+  cause: Malformed geometry string
+  action: Check WKT syntax (e.g. POLYGON((...)))
+  class: validation
+- error: KiFS directory not found
+  cause: Wrong KiFS path
+  action: Run io kifs-list to browse KiFS
+  class: not-found
+- error: Import file not found
+  cause: Bad file path for import
+  action: Verify the file path exists and is accessible
+  class: not-found
+- error: Monitor not found
+  cause: Invalid monitor ID
+  action: Run monitor show to list active monitors
+  class: not-found
+- error: Timeout (graph solve or Cypher)
+  cause: Large graph or unfiltered traversal
+  action: Raise the client timeout; add inline WHERE filters to prune paths early
+  class: timeout
+silent_failures:
+  note: The provider explicitly documents error conditions that raise NOTHING. These
+    are recorded because an agent cannot detect them from the response envelope.
+  cases:
+  - symptom: A time filter matches every row in the table, with no error raised
+    cause: LONG() applied to a bare temporal literal returns the YEAR, not epoch milliseconds
+      — LONG(TIMESTAMP '2016-12-01 00:00:00') evaluates to 2016
+    action: Drop the LONG(); compare the column against a temporal literal directly.
+      Sanity-check the result count against COUNT(*).
+    source: https://github.com/kineticadb/agent-skills/blob/main/knowledge/kinetica-core-rules.md
+  - symptom: DOUBLE("ts") on a TIMESTAMP column returns 0; DOUBLE(NOW()) returns 2026
+    cause: Numeric casts of temporal values are undocumented and unreliable
+    action: Use MSECS_SINCE_EPOCH() when epoch milliseconds are genuinely required
+sdk_install_errors:
+- error: 'Cannot find module ''@kinetica/gpudb'''
+  cause: Node.js dependencies not installed
+  action: npm install
+- error: 'ModuleNotFoundError: No module named ''gpudb'''
+  cause: Python dependencies not installed
+  action: pip install gpudb
+- error: No matching distribution found for gpudb
+  cause: Unsupported Python version (3.14+)
+  action: The gpudb package requires Python 3.8–3.13

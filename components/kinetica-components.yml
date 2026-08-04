@@ -1,0 +1,77 @@
+generated: '2026-08-04'
+method: searched
+source: https://github.com/kineticadb and https://www.kinetica.com/tools/graph-explorer
+note: Kinetica's client-side surface is map and graph visualisation libraries plus
+  BI/observability plugins that render Kinetica data inside a host application. These
+  are distinct from the server-side client libraries catalogued in packages/kinetica-packages.yml.
+families:
+- family: geospatial-map
+  description: Browser libraries that render Kinetica's server-side WMS map tiles and
+    geospatial query results.
+  components:
+  - name: kinetica-kickbox-mapbox-gl
+    repository: https://github.com/kineticadb/kinetica-kickbox-mapbox-gl
+    language: javascript
+    loader: Mapbox GL JS
+    description: Code-acceleration and interoperability library between Kinetica and
+      Mapbox GL — wires WMS raster layers, heatmaps and identify-by-radius interactions
+      to a Kinetica cluster.
+    official: true
+  - name: kinetica-react
+    repository: https://github.com/kineticadb/kinetica-react
+    language: javascript
+    loader: React + OpenLayers
+    description: Example WMS application using React and OpenLayers.
+    official: true
+    kind: reference implementation
+- family: graph-visualisation
+  description: Force-directed graph rendering over Kinetica graph objects.
+  components:
+  - name: kinetica-graph-viz
+    repository: https://github.com/kineticadb/kinetica-graph-viz
+    language: javascript
+    official: true
+  - name: react-kinetica-graph-viz
+    repository: https://github.com/kineticadb/react-kinetica-graph-viz
+    language: javascript
+    loader: React
+    official: true
+  - name: Graph Explorer
+    url: https://www.kinetica.com/tools/graph-explorer
+    kind: hosted zero-install browser workspace
+    description: Auto-loaded ontology, GQL query helper, live force-graph and geospatial
+      render — no install required.
+    official: true
+- family: bi-and-observability-plugins
+  description: Panels and chart types that embed Kinetica query results into third-party
+    dashboards.
+  components:
+  - name: grafana-kinetica-datasource
+    repository: https://github.com/kineticadb/grafana-kinetica-datasource
+    language: typescript
+    host: Grafana
+    description: Kinetica datasource plug-in for Grafana.
+    official: true
+  - name: superset-plugin-chart-kinetica-map
+    repository: https://github.com/kineticadb/superset-plugin-chart-kinetica-map
+    language: javascript
+    host: Apache Superset
+    description: Kinetica map chart plugin for Superset.
+    official: true
+  - name: Power BI connector
+    repository: https://github.com/kineticadb/kinetica-connector-powerbi
+    host: Power BI
+    official: true
+    note: legacy — repository last updated 2021
+server_side_render:
+  wms: Kinetica renders map tiles server-side and serves them over WMS; the provider
+    ships a wms-reference knowledge file in its agent-skills package.
+  reference: https://github.com/kineticadb/agent-skills/blob/main/knowledge/wms-reference.md
+excluded:
+  - reason: server-side connectors and integrations, not client-side UI components
+    items:
+    - kinetica-connector-kafka
+    - kinetica-connector-nifi
+    - kinetica-connector-beam
+    - kinetica-connector-presto
+    - kinetica-airflow

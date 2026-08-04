@@ -1,0 +1,102 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.kinetica.com/content/api/concepts and https://github.com/kineticadb/agent-skills/blob/main/knowledge/curl-api-reference.md
+docs: https://docs.kinetica.com/7.2/api/
+note: Kinetica publishes no OpenAPI document, so this profile is read from the published
+  API concepts / REST access documentation rather than derived from securitySchemes.
+summary:
+  types:
+  - http
+  - oauth2
+  api_key_in: []
+  oauth2_flows:
+  - authorizationCode
+  surfaces:
+  - Kinetica Database REST API
+  - Kinetica Toolbelt MCP Server
+  - Kinetica Docs MCP Server
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  surface: Kinetica Database REST API
+  in: header
+  parameter: Authorization
+  description: Database username and password sent as HTTP Basic credentials on every
+    POST. All Kinetica REST endpoints require POST.
+  example_header: 'Authorization: Basic <base64(user:pass)>'
+  sources:
+  - https://docs.kinetica.com/content/api/concepts
+  - https://github.com/kineticadb/agent-skills/blob/main/knowledge/curl-api-reference.md
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  surface: Kinetica Database REST API
+  in: header
+  parameter: Authorization
+  description: OAuth 2.0 bearer token, documented as the preferred mechanism when the
+    deployment has SSO configured. Kinetica 7.2.2 added single sign-on across its UI
+    platforms.
+  sources:
+  - https://github.com/kineticadb/agent-skills/blob/main/knowledge/curl-api-reference.md
+- name: toolbeltOAuth2
+  type: oauth2
+  surface: Kinetica Toolbelt MCP Server
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.toolbelt.ai/oauth/authorize
+    tokenUrl: https://app.toolbelt.ai/oauth/token
+    registrationUrl: https://app.toolbelt.ai/oauth/register
+    pkce: S256
+    scopes:
+      mcp:tools: Invoke the toolbelt_* MCP tools against the connected Kinetica database
+      openid: OpenID Connect subject identity
+  refresh_supported: true
+  token_endpoint_auth_methods:
+  - none
+  - client_secret_post
+  bearer_methods:
+  - header
+  protected_resource_metadata: https://mcp.toolbelt.ai/.well-known/oauth-protected-resource
+  authorization_server_metadata: https://app.toolbelt.ai/.well-known/oauth-authorization-server
+  standards:
+  - RFC 6749
+  - RFC 7636
+  - RFC 7591
+  - RFC 8414
+  - RFC 9728
+  sources:
+  - well-known/kinetica-toolbelt-oauth-protected-resource.json
+  - well-known/kinetica-toolbelt-oauth-authorization-server.json
+- name: none
+  type: none
+  surface: Kinetica Docs MCP Server
+  description: The documentation MCP server declares authentication:none in its published
+    manifest and answers tools/list anonymously.
+  sources:
+  - https://docs.kinetica.com/.well-known/mcp.json
+in_database_authorization:
+  model: PostgreSQL-style GRANT/REVOKE with Kinetica extensions
+  external_identity: LDAP users are created with an @ prefix (CREATE USER "@ldap_user")
+  system_permissions:
+  - SYSTEM ADMIN
+  - SYSTEM CREATE
+  - SYSTEM MONITOR
+  - SYSTEM READ
+  - SYSTEM WRITE
+  - USER ADMIN
+  object_permissions:
+  - schema-level (ALL, SELECT, CREATE TABLE, INSERT, UPDATE, DELETE)
+  - table-level (SELECT, INSERT, UPDATE, ALL, WITH GRANT OPTION)
+  extras:
+  - row-level security
+  - column masking
+  - resource groups
+  introspection: SHOW SECURITY FOR "<user-or-role>"
+  source: https://github.com/kineticadb/agent-skills/blob/main/knowledge/security-reference.md
+transport_security:
+  https_supported: true
+  note: Kinetica deployments commonly present self-signed certificates; client libraries
+    expose an explicit certificate-verification bypass (setBypassSslCertCheck / skip_ssl_cert_verification,
+    default false) and the documented curl examples use -k.
+  source: https://docs.kinetica.com/content/api/concepts

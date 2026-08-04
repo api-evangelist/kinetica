@@ -1,0 +1,56 @@
+generated: '2026-08-04'
+method: searched
+source: https://www.kinetica.com/llms.txt and https://docs.kinetica.com/7.2/install/
+note: Kinetica has no test-vs-live key separation or magic test values — it is deployed
+  software, not a metered multi-tenant API. Its "sandbox" is a free local or hosted
+  instance you provision and then load with your own data. Nothing below is invented;
+  every value is a command or URL the provider publishes.
+modes:
+- name: Developer Edition
+  kind: free local instance
+  url: https://www.kinetica.com/kinetica-developer-edition
+  run: docker run -p 9191:9191 kinetica/developer-edition
+  rest_base: http://localhost:9191
+  free: true
+  note: 'the run command is quoted verbatim from https://www.kinetica.com/llms.txt.
+    Docker Hub''s public API returned 404 for the repository kinetica/developer-edition
+    on 2026-08-04 — the image may be unlisted or gated behind the Developer Edition
+    signup. Publicly listed Kinetica images on Docker Hub include kinetica/kinetica-intel,
+    kinetica/kinetica-cuda91 and kinetica/kagent.'
+- name: Kinetica Cloud
+  kind: hosted free or dedicated instance
+  url: https://cloud.kinetica.com/
+  free_tier: true
+  note: 'the console''s own description: "Provision free or dedicated Kinetica databases
+    on the cloud". Issues a per-cluster host; there is no shared public endpoint.'
+- name: Graph Explorer
+  kind: zero-install browser workspace
+  url: https://www.kinetica.com/tools/graph-explorer
+  free: true
+  note: auto-loaded ontology, GQL query helper, live force-graph and geospatial render.
+    Try-before-install surface for the graph engine.
+- name: Kinetica Workbench
+  kind: bundled notebook-style SQL workbench
+  docs: https://docs.kinetica.com/content/admin/workbench/index.md
+  note: ships with the database; workbooks are the guided-tutorial format
+test_data:
+  provided: true
+  kind: example workbooks and demo datasets, not synthetic credentials
+  sources:
+  - repository: https://github.com/kineticadb/examples
+    description: Workbooks for the Kinetica Workbench
+  - repository: https://github.com/kineticadb/featured_examples
+    description: All the featured example workbooks
+  - url: https://www.kinetica.com/demos
+  - url: https://www.kinetica.com/learn
+test_keys:
+  separate_test_mode: false
+  key_prefixes: []
+  note: authentication is a real database username/password or an OAuth bearer token
+    against the instance you provisioned. There is no test-key namespace.
+test_values:
+  magic_identifiers: []
+  test_cards: []
+  note: not applicable — Kinetica is not a payments or messaging provider.
+time_simulation:
+  test_clocks: false

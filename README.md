@@ -42,5 +42,14 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kinetica is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/kinetica_stock/
+Kinetica is a GPU-accelerated, real-time analytical database that unifies relational (SQL), vector, graph,
+geospatial, time-series and OLAP workloads in a single query engine, aimed at applications needing
+millisecond-latency analytics over continuously streaming data. It is consumed through a POST-only JSON
+REST API served from each deployment on port 9191, first-party clients for Python, Java, C++, C#,
+JavaScript/Node.js and Go, JDBC/ODBC drivers, and the KiSQL command-line client. For agents, Kinetica
+publishes an A2A agent card and an installable Agent Skills package on its documentation host, and ships
+Toolbelt — an OAuth-protected hosted MCP server.
+
+- https://www.kinetica.com/
+- https://docs.kinetica.com/
+- https://github.com/kineticadb

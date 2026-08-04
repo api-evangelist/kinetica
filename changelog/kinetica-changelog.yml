@@ -1,0 +1,66 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.kinetica.com/content/release/7_2
+url: https://docs.kinetica.com/7.2/release/
+scheme: four-part product version (major.minor.patch.build) with per-release build
+  or publish dates; features inside a minor line are annotated "as of <version>"
+current_version: 7.2.3
+note: Recent window only — the live release notes at docs.kinetica.com are the source
+  of truth. Kinetica keeps separate release-note pages per minor line (7.2, 7.1, 7.0).
+entries:
+- version: 7.2.3
+  date: '2025-08-28'
+  date_kind: build
+  breaking: false
+  highlights:
+  - On-disk column compression
+  - SQL-orchestrated commands for full and incremental backups
+  - PGQ/GQL graph query language support
+  - Native Kafka integration for high-availability data replication
+- version: 7.2.2
+  date: '2024-09-21'
+  date_kind: build
+  breaking: false
+  highlights:
+  - HNSW index support for vector similarity search
+  - Parallelized group-by output handling
+  - Dictionary encoding on unrestricted-length string columns
+  - Single sign-on (SSO) across the UI platforms
+- version: 7.2.1
+  date: '2024-08-27'
+  date_kind: build
+  breaking: false
+  highlights:
+  - Remote model support for embedding generation
+  - UDF for automated RAG across SQL-GPT contexts
+  - Recursive EXPLAIN hint for materialized views
+  - CREATE permissions at system, directory and schema level
+  - Query optimization hints (MATERIALIZE, GROUPBY_PK, NO_VIRTUAL_UNION)
+  - Job user-data tagging via hints
+- version: 7.2.0
+  date: '2024-02-11'
+  date_kind: publish
+  breaking: true
+  breaking_detail: store-only column type removed; affected VARCHAR columns are automatically
+    converted
+  highlights:
+  - Unlimited string support across scalar/aggregate functions and SQL operations
+  - ARRAY type with scalar and aggregate functions
+  - JSON type with a full function suite
+  - VECTOR type with distance and norm calculations
+  - Storage optimization reducing on-disk size by ~50%
+related_release_lines:
+- version: '7.1'
+  url: https://docs.kinetica.com/content/release/7_1
+- version: '7.0'
+  url: https://docs.kinetica.com/content/release/7_0
+  note: this line's notes include security fixes, e.g. sanitizing input to the GAdmin
+    /gadmin/gpudbManager/getLogs endpoint to address a command-injection vulnerability
+    (as of 7.0.11.5)
+client_library_versioning:
+  note: client libraries track the database version — gpudb 7.2.3.10 (PyPI), @kinetica/gpudb
+    7.2.3-2 (npm), Kinetica 7.2.3.5 (NuGet), mcp-kinetica 7.2.3.2 (PyPI)
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://docs.kinetica.com/content/release/7_2
+  http_status: 200

@@ -1,23 +1,199 @@
 aid: kinetica
 name: Kinetica
-description: 'Kinetica is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: Kinetica is a GPU-accelerated, real-time analytical database that unifies
+  relational (SQL), vector, graph, geospatial, time-series and OLAP workloads in a
+  single query engine, aimed at applications needing millisecond-latency analytics
+  over continuously streaming data. Grown out of a GPU-accelerated geospatial and
+  temporal engine built for U.S. Army Intelligence (INSCOM) in 2009, it is deployed
+  today as the retrieval and reasoning layer behind AI agents and LLM-powered systems.
+  The database is consumed through a POST-only JSON REST API (/execute/sql, /show/table,
+  /insert/records/json, /filter/*, /aggregate/*, /match/graph and friends) served
+  from each deployment on port 9191, plus first-party client libraries for Python,
+  Java, C++, C#, JavaScript/Node.js and Go, JDBC/ODBC drivers, and the KiSQL command-line
+  client. For agents, Kinetica publishes an A2A agent card and an installable Agent
+  Skills package on its documentation host, and ships Toolbelt — an OAuth-protected
+  hosted MCP server exposing toolbelt_* tools for SQL, vector search, graph traversal,
+  schema introspection and ingest-job inspection.
+image: https://kinetica-web-assets.s3.us-east-1.amazonaws.com/assets/og-image.png
 url: https://raw.githubusercontent.com/api-evangelist/kinetica/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
-specificationVersion: '0.20'
+x-tier: profiled
+x-tier-reason: enrichment-pipeline
+specificationVersion: '0.21'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
-- Company
-apis: []
+- database
+- analytics
+- gpu-acceleration
+- real-time-analytics
+- vector-search
+- graph-analytics
+- geospatial
+- time-series
+- sql
+- streaming
+- data-infrastructure
+- mcp
+- agent-native
+- rag
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- name: Kinetica Database REST API
+  description: POST-only JSON REST API exposed by every Kinetica deployment on port
+    9191. Endpoints cover SQL execution (/execute/sql), record ingest and egress (/insert/records/json,
+    /get/records/json), schema and metadata introspection (/show/table, /show/graph,
+    /show/system/properties), filtering (/filter/byarea, /filter/byradius), aggregation
+    (/aggregate/groupby, /aggregate/statistics, /aggregate/histogram, /aggregate/kmeans),
+    graph creation and solving (/create/graph, /match/graph) and cluster administration
+    (/admin/rebalance, /admin/show/cluster/operations). Authentication is HTTP Basic
+    or an OAuth 2.0 bearer token. The base URL is deployment-specific — clusters are
+    self-hosted or provisioned through Kinetica Cloud — so there is no single public
+    production host.
+  humanURL: https://docs.kinetica.com/7.2/api/rest/
+  baseURL: https://cloud.kinetica.com/
+  x-base-url-note: Deployment-specific. The documented form is http://<db.host>:9191
+    for a self-managed cluster; cloud.kinetica.com is the Kinetica Cloud provisioning
+    console that issues a per-cluster host.
+  tags:
+  - database
+  - sql
+  - analytics
+  - vector-search
+  - graph-analytics
+  - geospatial
+  - time-series
+  properties:
+  - type: Documentation
+    url: https://docs.kinetica.com/7.2/
+  - type: APIReference
+    url: https://docs.kinetica.com/7.2/api/rest/
+  - type: GettingStarted
+    url: https://docs.kinetica.com/7.2/guides/quickstart-guide/
+  - type: Authentication
+    url: authentication/kinetica-authentication.yml
+  - type: Conventions
+    url: conventions/kinetica-conventions.yml
+  - type: ErrorCatalog
+    url: errors/kinetica-error-codes.yml
+- name: Kinetica Toolbelt MCP Server
+  description: Hosted Model Context Protocol server that gives any MCP-speaking agent
+    a single endpoint onto a Kinetica database. Exposes toolbelt_* tools for SQL execution,
+    vector search, knowledge-graph traversal, schema introspection and ingest-job
+    inspection, with namespace isolation between datasets. Protected by OAuth 2.0
+    (RFC 9728 protected-resource metadata, authorization server at app.toolbelt.ai,
+    scope mcp:tools, PKCE S256, dynamic client registration). Installable in one command
+    with npx @toolbeltai/cli, or self-hosted via the Helm chart.
+  humanURL: https://www.kinetica.com/agents
+  baseURL: https://mcp.toolbelt.ai/mcp
+  tags:
+  - mcp
+  - agent-native
+  - database
+  - vector-search
+  - graph-analytics
+  properties:
+  - type: MCPServer
+    url: mcp/kinetica-mcp.yml
+  - type: Documentation
+    url: https://www.toolbelt.ai
+  - type: OAuthScopes
+    url: scopes/kinetica-scopes.yml
+- name: Kinetica Docs MCP Server
+  description: Read-only Model Context Protocol server over the published Kinetica
+    documentation site, advertised from https://docs.kinetica.com/.well-known/mcp.json
+    with authentication none. Exposes search_kinetica_docs (full-text search across
+    the docs knowledge base), query_docs_filesystem_kinetica_docs (read-only shell-like
+    queries against a virtualized in-memory filesystem of the docs tree) and submit_feedback
+    (report a documentation defect). Scoped to public site content; the server performs
+    no database actions.
+  humanURL: https://docs.kinetica.com/
+  baseURL: https://kinetica.main-kill-isr.mintlify.me/mcp
+  tags:
+  - mcp
+  - documentation
+  - agent-native
+  properties:
+  - type: MCPServer
+    url: mcp/kinetica-docs-mcp.yml
+  - type: Documentation
+    url: https://docs.kinetica.com/
 common:
+- type: VulnerabilityDisclosure
+  url: security/kinetica-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/kinetica-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/kinetica_stock/
+  url: https://www.kinetica.com/
+- type: DeveloperPortal
+  url: https://docs.kinetica.com/
+- type: Documentation
+  url: https://docs.kinetica.com/7.2/
+- type: APIReference
+  url: https://docs.kinetica.com/7.2/api/
+- type: GettingStarted
+  url: https://docs.kinetica.com/7.2/guides/quickstart-guide/
+- type: Support
+  url: https://www.kinetica.com/support
+- type: Blog
+  url: https://www.kinetica.com/blog
+- type: GitHubOrganization
+  url: https://github.com/kineticadb
+- type: Pricing
+  url: https://www.kinetica.com/pricing
+- type: SignUp
+  url: https://cloud.kinetica.com/
+- type: TermsOfService
+  url: https://www.kinetica.com/terms-of-service
+- type: PrivacyPolicy
+  url: https://www.kinetica.com/privacy-policy
+- type: ChangeLog
+  url: https://docs.kinetica.com/7.2/release/
+- type: ChangeLog
+  url: changelog/kinetica-changelog.yml
+- type: Security
+  url: https://www.kinetica.com/.well-known/security.txt
+- type: SecurityTxt
+  url: well-known/kinetica-security.txt
+- type: WellKnown
+  url: well-known/kinetica-well-known.yml
+- type: AgentCard
+  url: a2a/kinetica-a2a.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/kinetica-mcp.yml
+- type: Packages
+  url: packages/kinetica-packages.yml
+- type: SDKs
+  url: packages/kinetica-packages.yml
+- type: LLMsTxt
+  url: llms/kinetica-llms.txt
+- type: Authentication
+  url: authentication/kinetica-authentication.yml
+- type: OAuthScopes
+  url: scopes/kinetica-scopes.yml
+- type: Conventions
+  url: conventions/kinetica-conventions.yml
+- type: ErrorCatalog
+  url: errors/kinetica-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/kinetica-lifecycle.yml
+- type: Conformance
+  url: conformance/kinetica-conformance.yml
+- type: CLI
+  url: cli/kinetica-cli.yml
+- type: Components
+  url: components/kinetica-components.yml
+- type: Sandbox
+  url: sandbox/kinetica-sandbox.yml
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 27
+  pass: local-v1

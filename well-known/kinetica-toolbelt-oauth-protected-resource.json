@@ -1,0 +1,1 @@
+{"resource":"https://mcp.toolbelt.ai/mcp","authorization_servers":["https://app.toolbelt.ai"],"scopes_supported":["mcp:tools"],"bearer_methods_supported":["header"]}

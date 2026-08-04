@@ -1,0 +1,78 @@
+generated: '2026-08-04'
+method: searched
+source: live probes of every host in apis.yml
+hosts:
+- host: https://www.kinetica.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: kinetica-security.txt
+    note: RFC 9116; Contact mailto:security@kinetica.com, Expires 2027-04-15
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://docs.kinetica.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: ../a2a/kinetica-agent-card.json
+    note: A2A agent card; see a2a/kinetica-a2a.yml
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    file: kinetica-agent-skills-index.json
+    note: agentskills.io discovery 0.2.0; one skill (kinetica) with sha256 digest
+  - path: /.well-known/agent-skills/kinetica/skill.md
+    status: 200
+    file: ../skills/kinetica-kinetica.md
+    note: provider-published Agent Skill, saved verbatim
+  - path: /.well-known/mcp.json
+    status: 200
+    file: kinetica-mcp.json
+    note: docs MCP manifest, transport http, authentication none
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+- host: https://mcp.toolbelt.ai
+  documents:
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: kinetica-toolbelt-oauth-protected-resource.json
+    note: RFC 9728; resource https://mcp.toolbelt.ai/mcp, scope mcp:tools
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: https://app.toolbelt.ai
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: kinetica-toolbelt-oauth-authorization-server.json
+    note: RFC 8414; issuer https://app.toolbelt.ai, PKCE S256, dynamic client registration
+  - path: /.well-known/openid-configuration
+    status: 200
+    rejected: returns the SPA HTML shell, not OIDC discovery JSON
+- host: https://www.toolbelt.ai
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    note: RFC 9116 for the Toolbelt product host; Contact mailto:security@toolbelt.ai,
+      Expires 2027-04-30. Not saved as the canonical Kinetica security.txt.
+  - path: /.well-known/agent-card.json
+    status: 200
+    rejected: HTML single-page-app catch-all answers 200 for every /.well-known/* path

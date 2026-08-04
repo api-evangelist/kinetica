@@ -1,0 +1,96 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.kinetica.com/content/api/concepts and https://github.com/kineticadb/agent-skills/blob/main/knowledge/curl-api-reference.md
+docs: https://docs.kinetica.com/7.2/api/rest/
+surface: Kinetica Database REST API
+transport:
+  style: RPC-over-HTTP, JSON body
+  method: POST only — every Kinetica REST endpoint requires POST, including read operations
+  content_type: application/json
+  base_url_form: http://<db.host>:9191 (or https://<host>:8082/gpudb-0 behind the
+    bundled reverse proxy)
+  path_shape: verb-first resource paths (/execute/sql, /show/table, /insert/records/json,
+    /filter/byradius, /aggregate/groupby, /match/graph, /admin/rebalance)
+  options_envelope: nearly every endpoint accepts an "options" map of string key/value
+    pairs for endpoint-specific behaviour
+authentication:
+  styles:
+  - http-basic
+  - oauth2-bearer
+  header: Authorization
+  detail: authentication/kinetica-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: Kinetica documents no idempotency-key header or request-deduplication contract.
+    Write endpoints are not idempotent by protocol; SQL-level idempotency is achieved
+    with OR REPLACE / IF NOT EXISTS clauses (CREATE OR REPLACE GRAPH, CREATE SCHEMA
+    IF NOT EXISTS, CREATE TABLE IF NOT EXISTS) rather than at the API layer.
+  sql_level_constructs:
+  - CREATE SCHEMA IF NOT EXISTS
+  - CREATE TABLE IF NOT EXISTS
+  - CREATE OR REPLACE GRAPH
+  - CREATE OR REPLACE MATERIALIZED VIEW
+pagination:
+  style: offset-limit
+  request_params:
+  - offset
+  - limit
+  default_limit: 100 — the provider's own agent skill instructs clients to always append
+    LIMIT 100 unless the caller specifies otherwise
+  applies_to:
+  - /execute/sql
+  - /get/records
+  - /get/records/json
+encoding:
+  request: JSON
+  response: binary by default; set "encoding":"json" on /execute/sql to receive the
+    json_encoded_response field instead of binary column data
+  note: this is the single most common integration surprise the provider documents
+    — omitting encoding:"json" returns column data in Kinetica's binary Avro form
+identifiers:
+  case_sensitive: true
+  quoting: ANSI double quotes only; backticks are rejected
+  qualification: table names must be fully qualified ("schema"."table"), or "*" to
+    match all; partial wildcards such as "schema.*table*" are not supported
+  statement_terminator: none — trailing semicolons must be omitted
+sql_dialect:
+  baseline: PostgreSQL-compatible
+  deviations_doc: https://github.com/kineticadb/agent-skills/blob/main/knowledge/kinetica-core-rules.md
+  notable:
+  - aggregate functions may never be nested; use CTEs
+  - timestamps cannot be subtracted; use DATEDIFF('unit', start, end)
+  - ST_DISTANCE takes exactly three arguments
+  - array-typed columns cannot appear in ORDER BY
+  - information_schema reports PostgreSQL type names; query ki_catalog.ki_columns for
+    Kinetica-native types
+versioning:
+  scheme: product-version paths in the docs (docs.kinetica.com/7.2/...); the wire API
+    itself is unversioned in the path
+  current: 7.2.3
+  runtime_introspection: POST /show/system/properties with {"options":{"properties":"version.gpudb_core_version"}}
+  detail: lifecycle/kinetica-lifecycle.yml
+errors:
+  envelope: status/message pair on the JSON body; client libraries raise GPUdb*Exception
+  format: string-message (not RFC 9457)
+  detail: errors/kinetica-error-codes.yml
+rate_limits:
+  documented: false
+  note: Kinetica is deployed software rather than a metered multi-tenant API; no published
+    rate-limit headers or quotas. Concurrency and workload isolation are governed in-database
+    by resource groups.
+tracing:
+  request_id_header: null
+  documented: false
+  note: job-level tracing is available in-database — jobs can be tagged with user data
+    via query hints (7.2.1) and inspected with SHOW/job endpoints
+transport_security:
+  tls: supported; deployments commonly present self-signed certificates and the documented
+    curl examples pass -k
+  client_bypass_flag: setBypassSslCertCheck (Java/C++) / skip_ssl_cert_verification
+    (Python), default false
+cross_references:
+  authentication: authentication/kinetica-authentication.yml
+  errors: errors/kinetica-error-codes.yml
+  lifecycle: lifecycle/kinetica-lifecycle.yml
+  scopes: scopes/kinetica-scopes.yml

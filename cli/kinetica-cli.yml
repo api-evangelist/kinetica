@@ -1,0 +1,45 @@
+generated: '2026-08-04'
+method: searched
+source: https://github.com/kineticadb/kisql and https://www.npmjs.com/package/@toolbeltai/cli
+clis:
+- name: KiSQL
+  description: Kinetica's first-party interactive command-line SQL client. Connects
+    to a Kinetica cluster and executes SQL interactively or from a script.
+  repository: https://github.com/kineticadb/kisql
+  docs: https://docs.kinetica.com/7.2/sql/
+  official: true
+  connection: JDBC connection string of the form jdbc:kinetica:http://<db.host>:9191
+  used_by: the provider's own agent-skills package targets KiSQL as one of three interfaces
+    an agent should learn (SQL dialect, Python SDK, interactive CLI)
+- name: Toolbelt CLI
+  description: One-command installer that wires the Toolbelt MCP server into an AI
+    client. Auto-detects the agent (Claude, Cursor, Windsurf, ChatGPT, Gemini, Codex
+    CLI), writes the MCP configuration and mints credentials.
+  package: '@toolbeltai/cli'
+  version: 0.1.7
+  registry: npm
+  url: https://www.npmjs.com/package/@toolbeltai/cli
+  install: npx @toolbeltai/cli
+  homepage: https://toolbelt.ai
+  official: true
+- name: kgr (GraphRAG)
+  description: Open-source Python CLI that builds a knowledge graph from text — LLM-induced
+    ontology, schema-grounded Cypher over a live property graph.
+  url: https://www.kinetica.com/tools/graph-rag
+  official: true
+  kind: open-source tool, not a database administration CLI
+related_admin_surfaces:
+- name: GAdmin
+  kind: web
+  description: Kinetica Administration Application — browser-based cluster administration.
+  docs: https://docs.kinetica.com/content/admin/gadmin/index.md
+- name: KAgent
+  kind: agent/daemon
+  docs: https://docs.kinetica.com/content/admin/kagent/kagent.md
+- name: Kinetica Workbench
+  kind: web
+  description: Notebook-style SQL workbench with workbooks.
+  docs: https://docs.kinetica.com/content/admin/workbench/index.md
+note: The CLI binaries are catalogued alongside the client libraries in packages/kinetica-packages.yml.
+  Command-by-command surfaces are not enumerated here because Kinetica publishes KiSQL's
+  reference in the SQL documentation rather than as a command list.

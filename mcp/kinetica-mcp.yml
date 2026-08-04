@@ -1,0 +1,82 @@
+generated: '2026-08-04'
+method: searched
+status: published
+source: https://www.kinetica.com/agents
+server:
+  name: toolbelt
+  product: Toolbelt
+  vendor: Kinetica
+  transport: http
+  url: https://mcp.toolbelt.ai/mcp
+  site: https://www.toolbelt.ai
+  overview: https://www.kinetica.com/agents
+  install: npx @toolbeltai/cli
+  self_host: Helm chart (self-host the whole stack on your own cluster) or the hosted
+    edition
+authentication:
+  type: oauth2
+  gated: true
+  observed: HTTP 401 with WWW-Authenticate:Bearer resource_metadata="https://mcp.toolbelt.ai/.well-known/oauth-protected-resource/mcp"
+  protected_resource_metadata: https://mcp.toolbelt.ai/.well-known/oauth-protected-resource
+  authorization_server: https://app.toolbelt.ai
+  authorization_endpoint: https://app.toolbelt.ai/oauth/authorize
+  token_endpoint: https://app.toolbelt.ai/oauth/token
+  registration_endpoint: https://app.toolbelt.ai/oauth/register
+  scopes:
+  - mcp:tools
+  - openid
+  pkce: S256
+  grant_types:
+  - authorization_code
+  - refresh_token
+  bearer_methods:
+  - header
+tools_source: https://www.kinetica.com/llms.txt and https://www.kinetica.com/agents
+  — names and capability descriptions only. The live tools/list is OAuth-gated, so
+  per-tool inputSchema requires authenticated introspection and is NOT recorded here.
+tools:
+- name: toolbelt_sql
+  description: Execute SQL against the connected Kinetica database.
+  schema: requires authenticated introspection
+- name: toolbelt_vector_search
+  description: Vector similarity search over embeddings stored alongside structured
+    and geospatial data.
+  schema: requires authenticated introspection
+- name: toolbelt_graph_traversal
+  description: Traverse the knowledge graph / property graph in the connected database.
+  schema: requires authenticated introspection
+- name: toolbelt_schema_introspection
+  description: Introspect schemas, tables and columns available to the agent.
+  schema: requires authenticated introspection
+- name: toolbelt_ingestion_job_inspection
+  description: Inspect the state of streaming/batch ingest jobs.
+  schema: requires authenticated introspection
+features:
+- namespace isolation between datasets exposed to an agent
+- one endpoint for any MCP-speaking client (Claude, Cursor, Windsurf, ChatGPT, Gemini,
+  Codex CLI)
+related_servers:
+- name: mcp-kinetica
+  transport: stdio
+  kind: open-source, self-run
+  package: https://pypi.org/project/mcp-kinetica/
+  repository: https://github.com/kineticadb/mcp-kinetica
+  note: first-party Python MCP server for a Kinetica database, published by kineticadb
+- name: Kinetica Docs MCP
+  transport: http
+  kind: documentation, anonymous
+  manifest: https://docs.kinetica.com/.well-known/mcp.json
+  file: kinetica-docs-mcp.yml
+x-evidence:
+  fetched: '2026-08-04'
+  probes:
+  - url: https://mcp.toolbelt.ai/mcp
+    method: POST tools/list
+    http_status: 401
+    body: '{"error":"unauthorized","error_description":"Bearer token required"}'
+  - url: https://mcp.toolbelt.ai/.well-known/oauth-protected-resource
+    http_status: 200
+    content_type: application/json
+  - url: https://app.toolbelt.ai/.well-known/oauth-authorization-server
+    http_status: 200
+    content_type: application/json

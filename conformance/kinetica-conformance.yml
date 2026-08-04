@@ -1,0 +1,109 @@
+generated: '2026-08-04'
+method: searched
+source: live probes of Kinetica's published discovery documents plus the documentation
+note: This records cross-cutting technical standards Kinetica's own published surface
+  conforms to. It is NOT a compliance-certification claim — no SOC 2 / ISO 27001 /
+  PCI / HIPAA / FedRAMP attestation and no trust center was found on any Kinetica host,
+  so no Compliance pointer is emitted.
+standards:
+- id: rfc9116-security-txt
+  conforms: true
+  evidence: https://www.kinetica.com/.well-known/security.txt returns 200 with Contact,
+    Expires, Preferred-Languages and Canonical fields; the file names RFC 9116 explicitly
+- id: a2a-agent-card
+  conforms: partial
+  version: A2A 1.0.0 (card declares protocolVersion 0.3)
+  evidence: https://docs.kinetica.com/.well-known/agent-card.json returns a valid AgentCard
+    object; graded near-conformant — uses supportedInterfaces rather than additionalInterfaces.
+    See a2a/kinetica-a2a.yml
+- id: model-context-protocol
+  conforms: true
+  version: '2025-06-18'
+  evidence: two live MCP servers — Toolbelt (https://mcp.toolbelt.ai/mcp, OAuth-gated)
+    and the docs MCP (https://kinetica.main-kill-isr.mintlify.me/mcp, anonymous, initialize
+    negotiated protocolVersion 2025-06-18 and tools/list returned 3 tools)
+- id: rfc9728-oauth-protected-resource-metadata
+  conforms: true
+  evidence: https://mcp.toolbelt.ai/.well-known/oauth-protected-resource returns resource,
+    authorization_servers, scopes_supported and bearer_methods_supported; the 401 carries
+    WWW-Authenticate with resource_metadata
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: https://app.toolbelt.ai/.well-known/oauth-authorization-server returns issuer,
+    authorization_endpoint, token_endpoint, registration_endpoint and code_challenge_methods_supported
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported ["S256"] in the authorization-server metadata
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: registration_endpoint https://app.toolbelt.ai/oauth/register advertised
+    in the authorization-server metadata
+- id: oauth2
+  conforms: true
+  evidence: authorization_code + refresh_token grants on the Toolbelt authorization
+    server; OAuth 2.0 bearer tokens documented for the database REST API
+- id: openid-connect
+  conforms: partial
+  evidence: the Toolbelt authorization server advertises an openid scope, but no OIDC
+    discovery document is served (/.well-known/openid-configuration returns the SPA
+    shell). Kinetica 7.2.2 added SSO across its UI platforms and the database supports
+    LDAP-backed external users.
+- id: agentskills-discovery-0.2.0
+  conforms: true
+  evidence: https://docs.kinetica.com/.well-known/agent-skills/index.json declares $schema
+    https://schemas.agentskills.io/discovery/0.2.0/schema.json with a sha256-digested
+    skill entry
+- id: llms-txt
+  conforms: true
+  evidence: /llms.txt served on both www.kinetica.com and docs.kinetica.com, plus llms-full.txt
+    exports on both
+- id: sql-92
+  conforms: true
+  evidence: Kinetica SQL is documented as PostgreSQL-compatible with an enumerated deviation
+    list; standard SELECT/JOIN/UNION/window functions/CTEs including WITH RECURSIVE
+    are supported
+- id: ogc-wkt-wkb
+  conforms: true
+  evidence: native WKT/WKB geometry support with 130+ spatial functions and ST_* function
+    naming
+- id: ogc-wms
+  conforms: true
+  evidence: server-side map-tile rendering exposed as a WMS endpoint; the provider ships
+    a wms-reference knowledge file in its agent-skills package
+- id: openapi
+  conforms: false
+  evidence: no OpenAPI or Swagger document is published. Probed /openapi.json, /openapi.yaml,
+    /swagger.json, /api-docs and /redoc on www.kinetica.com, docs.kinetica.com and
+    api.kinetica.com — all 404 or unresolvable. docs.kinetica.com/api-reference/openapi.json
+    returns 200 but is the Mintlify "OpenAPI Plant Store" template, not Kinetica's
+    API, and was rejected.
+- id: asyncapi
+  conforms: false
+  evidence: no AsyncAPI document published. Kinetica integrates with Kafka/Pulsar as
+    a consumer and exposes in-database table monitors, but publishes no webhook catalogue
+    or event specification.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors are returned as a status/message pair on the JSON body, not application/problem+json
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: no Sunset or Deprecation headers and no published deprecation policy
+- id: graphql
+  conforms: false
+  evidence: no /graphql surface found. Kinetica ships PGQ/GQL graph query language and
+    Cypher, which are graph query languages, not GraphQL.
+- id: grpc
+  conforms: false
+  evidence: no published .proto definitions in the kineticadb GitHub organization, on
+    buf.build, or in the documentation
+- id: json-api
+  conforms: false
+  evidence: RPC-over-HTTP JSON, not JSON:API
+compliance_program:
+  published: false
+  trust_center: null
+  certifications: []
+  note: probe-security-programs.py returned trust=none. No SOC 2, ISO 27001, PCI DSS,
+    HIPAA or FedRAMP claim was found on kinetica.com. The company's origin is a U.S.
+    Army INSCOM deployment and it markets a defense-tech solution line, but no public
+    authorization or certification page exists to cite.

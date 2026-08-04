@@ -1,0 +1,77 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.kinetica.com/7.2/release/
+versioning:
+  scheme: four-part product version (major.minor.patch.build), surfaced as a version
+    segment in the documentation path
+  current: 7.2.3
+  current_build_date: '2025-08-28'
+  docs_versions:
+  - '7.2'
+  - '7.1'
+  - '7.0'
+  release_notes: https://docs.kinetica.com/7.2/release/
+  release_notes_by_line:
+    '7.2': https://docs.kinetica.com/content/release/7_2
+    '7.1': https://docs.kinetica.com/content/release/7_1
+    '7.0': https://docs.kinetica.com/content/release/7_0
+  api_path_versioning: false
+  note: the wire REST API is unversioned in the path (/execute/sql, not /v2/execute/sql);
+    the deployed database version is the version contract. Query it at runtime with
+    POST /show/system/properties {"options":{"properties":"version.gpudb_core_version"}}.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: Kinetica publishes no standalone deprecation or sunset policy and does not
+    implement RFC 8594 Sunset/Deprecation headers. Removals are announced in the release
+    notes for the line in which they occur, and the provider's own agent-skills package
+    ships a version-quirks reference listing features absent from 7.2.x.
+  observed_removals:
+  - release: 7.2.0
+    date: '2024-02-11'
+    change: store-only column type removed; affected VARCHAR columns are automatically
+      converted on upgrade
+    source: https://docs.kinetica.com/content/release/7_2
+  - release: 7.2.x
+    change: 'ANALYZE TABLE, ALTER TABLE ... SET SHARD KEY and a number of catalog tables/columns
+      do not exist in 7.2.x'
+    source: https://github.com/kineticadb/agent-skills/blob/main/knowledge/version-quirks.md
+sla:
+  url: null
+  uptime_target: null
+  note: no public SLA document found. Kinetica is deployed software (self-hosted or
+    Kinetica Cloud) rather than a metered public API, and support terms are handled
+    commercially.
+status_page:
+  url: null
+  probed:
+  - url: https://status.kinetica.com/
+    result: no DNS / no response
+  note: no public status page found.
+support:
+  url: https://www.kinetica.com/support
+  contact: https://www.kinetica.com/contact
+editions:
+  - name: Developer Edition
+    free: true
+    url: https://www.kinetica.com/kinetica-developer-edition
+    run: docker run -p 9191:9191 kinetica/developer-edition
+  - name: Enterprise Edition
+    url: https://www.kinetica.com/enterprise-edition
+  - name: Kinetica Cloud
+    url: https://cloud.kinetica.com/
+    note: provisions free or dedicated Kinetica databases in the cloud
+deprecated_operations: []
+x-evidence:
+  fetched: '2026-08-04'
+  probes:
+  - url: https://docs.kinetica.com/7.2/release/
+    http_status: 200
+  - url: https://docs.kinetica.com/content/release/7_2
+    http_status: 200
+  - url: https://status.kinetica.com/
+    http_status: 000
+  - url: https://www.kinetica.com/roadmap
+    http_status: 404

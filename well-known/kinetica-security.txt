@@ -1,0 +1,9 @@
+# Kinetica Security Contact
+# If you have discovered a security vulnerability in Kinetica's website, product,
+# or infrastructure, please report it using the contact below.
+# This file follows RFC 9116 (https://www.rfc-editor.org/rfc/rfc9116).
+
+Contact: mailto:security@kinetica.com
+Expires: 2027-04-15T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://www.kinetica.com/.well-known/security.txt

@@ -1,0 +1,55 @@
+generated: '2026-08-04'
+method: probed
+source: https://app.toolbelt.ai/.well-known/oauth-authorization-server
+docs: https://www.kinetica.com/agents
+note: Kinetica's database REST API uses HTTP Basic / bearer tokens and has no OAuth
+  scope surface. The scopes below belong to the Toolbelt MCP server, and were read
+  from live RFC 8414 authorization-server metadata and RFC 9728 protected-resource
+  metadata — not from documentation prose.
+schemes:
+- name: toolbeltOAuth2
+  surface: Kinetica Toolbelt MCP Server
+  source: well-known/kinetica-toolbelt-oauth-authorization-server.json
+  issuer: https://app.toolbelt.ai
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://app.toolbelt.ai/oauth/authorize
+    tokenUrl: https://app.toolbelt.ai/oauth/token
+    registrationUrl: https://app.toolbelt.ai/oauth/register
+    code_challenge_methods:
+    - S256
+scopes:
+- scope: mcp:tools
+  description: Invoke the Toolbelt MCP tools (toolbelt_sql, toolbelt_vector_search,
+    toolbelt_graph_traversal, toolbelt_schema_introspection, toolbelt_ingestion_job_inspection)
+    against the connected Kinetica database.
+  flows:
+  - authorizationCode
+  sources:
+  - well-known/kinetica-toolbelt-oauth-authorization-server.json
+  - well-known/kinetica-toolbelt-oauth-protected-resource.json
+  advertised_on_resource: true
+- scope: openid
+  description: OpenID Connect subject identity for the authenticated Toolbelt user.
+  flows:
+  - authorizationCode
+  sources:
+  - well-known/kinetica-toolbelt-oauth-authorization-server.json
+  advertised_on_resource: false
+protected_resources:
+- resource: https://mcp.toolbelt.ai/mcp
+  authorization_servers:
+  - https://app.toolbelt.ai
+  scopes_supported:
+  - mcp:tools
+  bearer_methods_supported:
+  - header
+x-evidence:
+  fetched: '2026-08-04'
+  probes:
+  - url: https://app.toolbelt.ai/.well-known/oauth-authorization-server
+    http_status: 200
+    content_type: application/json
+  - url: https://mcp.toolbelt.ai/.well-known/oauth-protected-resource
+    http_status: 200
+    content_type: application/json
