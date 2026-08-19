@@ -21,25 +21,22 @@ protocol:
       listChanged: true
     resources:
       listChanged: true
-instructions: Provides search and retrieval tools for the Kinetica Docs site; read-only
-  and scoped to published site content apart from submit_feedback. Also exposes resources
-  containing additional skill guidance.
-tools_source: live tools/list (HTTP 200, anonymous) — real inputSchema captured verbatim
-  in kinetica-docs-mcp-tools.json
+instructions: Provides search and retrieval tools for the Kinetica Docs site; read-only and scoped to
+  published site content apart from submit_feedback. Also exposes resources containing additional skill
+  guidance.
+tools_source: live tools/list (HTTP 200, anonymous) — real inputSchema captured verbatim in kinetica-docs-mcp-tools.json
 tools:
 - name: search_kinetica_docs
-  description: Search across the Kinetica Docs knowledge base to find relevant information
-    and code examples.
+  description: Search across the Kinetica Docs knowledge base to find relevant information and code examples.
   required_inputs:
   - query
 - name: query_docs_filesystem_kinetica_docs
-  description: Run a read-only shell-like query against a virtualized, in-memory filesystem
-    rooted at the docs tree.
+  description: Run a read-only shell-like query against a virtualized, in-memory filesystem rooted at
+    the docs tree.
   required_inputs:
   - command
 - name: submit_feedback
-  description: Report a problem with the documentation site so the docs team can fix
-    it.
+  description: Report a problem with the documentation site so the docs team can fix it.
   required_inputs:
   - path
   - feedback
@@ -57,3 +54,11 @@ x-evidence:
     method: POST tools/list
     http_status: 200
     tools_returned: 3
+deployment:
+  mode: remote
+  endpoint: https://kinetica.main-kill-isr.mintlify.me/mcp
+  verified: probed
+  probe: live
+  tools: 3
+  checked: '2026-08-12'
+  source: catalog MCP census
