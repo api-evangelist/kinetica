@@ -24,6 +24,21 @@ specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
+- Database
+- Analytics
+- gpu-acceleration
+- Real-Time Analytics
+- Vector Search
+- Graph Analytics
+- Geospatial
+- Time Series
+- SQL
+- Streaming
+- Data Infrastructure
+- MCP
+- agent-native
+- RAG
+tags_raw:
 - database
 - analytics
 - gpu-acceleration
@@ -61,6 +76,14 @@ apis:
     for a self-managed cluster; cloud.kinetica.com is the Kinetica Cloud provisioning
     console that issues a per-cluster host.
   tags:
+  - Database
+  - SQL
+  - Analytics
+  - Vector Search
+  - Graph Analytics
+  - Geospatial
+  - Time Series
+  tags_raw:
   - database
   - sql
   - analytics
@@ -92,6 +115,12 @@ apis:
   humanURL: https://www.kinetica.com/agents
   baseURL: https://mcp.toolbelt.ai/mcp
   tags:
+  - MCP
+  - agent-native
+  - Database
+  - Vector Search
+  - Graph Analytics
+  tags_raw:
   - mcp
   - agent-native
   - database
@@ -115,6 +144,10 @@ apis:
   humanURL: https://docs.kinetica.com/
   baseURL: https://kinetica.main-kill-isr.mintlify.me/mcp
   tags:
+  - MCP
+  - Documentation
+  - agent-native
+  tags_raw:
   - mcp
   - documentation
   - agent-native
