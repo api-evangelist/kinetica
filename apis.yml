@@ -14,6 +14,17 @@ description: Kinetica is a GPU-accelerated, real-time analytical database that u
   Skills package on its documentation host, and ships Toolbelt — an OAuth-protected
   hosted MCP server exposing toolbelt_* tools for SQL, vector search, graph traversal,
   schema introspection and ingest-job inspection.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinetica-web-assets.s3.us-east-1.amazonaws.com/assets/og-image.png
 url: https://raw.githubusercontent.com/api-evangelist/kinetica/refs/heads/main/apis.yml
 x-type: company
