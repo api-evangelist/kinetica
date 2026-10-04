@@ -49,6 +49,9 @@ x-tier-reason: enrichment-pipeline
 specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
 - Database
 - Analytics
@@ -62,8 +65,9 @@ tags:
 - Streaming
 - Data Infrastructure
 - MCP
-- agent-native
+- Agent-Native
 - RAG
+- A2A
 tags_raw:
 - database
 - analytics
@@ -79,6 +83,7 @@ tags_raw:
 - mcp
 - agent-native
 - rag
+- A2A
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -142,7 +147,7 @@ apis:
   baseURL: https://mcp.toolbelt.ai/mcp
   tags:
   - MCP
-  - agent-native
+  - Agent-Native
   - Database
   - Vector Search
   - Graph Analytics
@@ -172,7 +177,7 @@ apis:
   tags:
   - MCP
   - Documentation
-  - agent-native
+  - Agent-Native
   tags_raw:
   - mcp
   - documentation
@@ -256,3 +261,10 @@ x-enrichment:
   status: enriched
   artifacts_added: 27
   pass: local-v1
+x-a2a:
+  verified: true
+  probed: '2026-09-26'
+  url: "https://docs.kinetica.com/.well-known/agent-card.json"
+  grade: "conformant"
+  protocol_version: "0.3"
+  control: 404
