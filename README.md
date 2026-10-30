@@ -64,14 +64,114 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Kinetica is a GPU-accelerated, real-time analytical database that unifies relational (SQL), vector, graph,
-geospatial, time-series and OLAP workloads in a single query engine, aimed at applications needing
-millisecond-latency analytics over continuously streaming data. It is consumed through a POST-only JSON
-REST API served from each deployment on port 9191, first-party clients for Python, Java, C++, C#,
-JavaScript/Node.js and Go, JDBC/ODBC drivers, and the KiSQL command-line client. For agents, Kinetica
-publishes an A2A agent card and an installable Agent Skills package on its documentation host, and ships
-Toolbelt — an OAuth-protected hosted MCP server.
+Kinetica is a GPU-accelerated, real-time analytical database that unifies relational (SQL), vector, graph, geospatial, time-series and OLAP workloads in a single query engine, aimed at applications needing millisecond-latency analytics over continuously streaming data. Grown out of a GPU-accelerated geospatial and temporal engine built for U.S. Army Intelligence (INSCOM) in 2009, it is deployed today as the retrieval and reasoning layer behind AI agents and LLM-powered systems. The database is consumed through a POST-only JSON REST API (/execute/sql, /show/table, /insert/records/json, /filter/*, /aggregate/*, /match/graph and friends) served from each deployment on port 9191, plus first-party client libraries for Python, Java, C++, C#, JavaScript/Node.js and Go, JDBC/ODBC drivers, and the KiSQL command-line client. For agents, Kinetica publishes an A2A agent card and an installable Agent Skills package on its documentation host, and ships Toolbelt — an OAuth-protected hosted MCP server exposing toolbelt_* tools for SQL, vector search, graph traversal, schema introspection and ingest-job inspection.
 
-- https://www.kinetica.com/
-- https://docs.kinetica.com/
-- https://github.com/kineticadb
+**Areas:** Database · Analytics · gpu-acceleration · Real-Time Analytics · Vector Search · Graph Analytics · Geospatial · Time Series · SQL · Streaming · Data Infrastructure · MCP
+
+## Kinetica on APIs.io
+
+Everything profiled for Kinetica is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/kinetica/](https://apis.io/providers/kinetica/)** — or go straight to one of the APIs or properties below.
+
+### APIs (3)
+
+- [Kinetica Database REST API](https://apis.io/apis/kinetica/kinetica-database-rest-api/) — POST-only JSON REST API exposed by every Kinetica deployment on port 9191. Endpoints cover SQL execution (/execute/sql), record ingest and egress…
+- [Kinetica Toolbelt MCP Server](https://apis.io/apis/kinetica/kinetica-toolbelt-mcp-server/) — Hosted Model Context Protocol server that gives any MCP-speaking agent a single endpoint onto a Kinetica database. Exposes toolbelt_* tools for SQL…
+- [Kinetica Docs MCP Server](https://apis.io/apis/kinetica/kinetica-docs-mcp-server/) — Read-only Model Context Protocol server over the published Kinetica documentation site, advertised from https://docs.kinetica.com/.well-known/mcp.json with…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (2)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Kinetica Docs](https://apis.io/servers/kinetica/kinetica-docs/)
+- [toolbelt](https://apis.io/servers/kinetica/toolbelt/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Kinetica Authentication](https://apis.io/security/kinetica/kinetica-authentication/)
+- [Kinetica Domain Security](https://apis.io/security/kinetica/kinetica-domain-security/)
+- [Kinetica Vulnerability Disclosure](https://apis.io/security/kinetica/kinetica-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Kinetica Scopes](https://apis.io/scopes/kinetica/kinetica-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.kinetica.com/)
+- [Documentation](https://docs.kinetica.com/7.2/)
+- [Getting started](https://docs.kinetica.com/7.2/guides/quickstart-guide/)
+- [API reference](https://docs.kinetica.com/7.2/api/)
+- [Pricing](https://www.kinetica.com/pricing)
+- [Sign up](https://cloud.kinetica.com/)
+- [Support](https://www.kinetica.com/support)
+- [Changelog](https://docs.kinetica.com/7.2/release/)
+- [Blog](https://www.kinetica.com/blog)
+- [Security](https://www.kinetica.com/.well-known/security.txt)
+- [Terms of service](https://www.kinetica.com/terms-of-service)
+- [Privacy policy](https://www.kinetica.com/privacy-policy)
+- [GitHub](https://github.com/kineticadb)
+
+## API Evangelist rating
+
+**Kin Score 41.2** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 80.0 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 85.7 |
+| Access clarity | 31.6 |
+
+**Agent readiness 27.3** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/kinetica/](https://apis.io/providers/kinetica/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Kinetica: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/kinetica/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
